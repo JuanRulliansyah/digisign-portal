@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Button, Col, FormGroup, Input, Label } from "reactstrap";
 import { postKyc } from "services/kyc/manageKyc";
-import { useState } from "react";
 import { setErrorValidation } from "utils/helpers/commons";
 import { withRouter } from 'react-router-dom';
 import { alertNotification } from "utils/helpers/alertNotifications";
@@ -9,10 +8,6 @@ import { appConfigs } from "configs";
 
 
 const CardKyc = (props) => {
-
-    // const localStorage = LocalStorageService.getService();
-
-    const [ loading, setLoading ] = useState(false);
     const { register, errors, handleSubmit, setError } = useForm();
 
     const onSubmitKyc = (data) => {

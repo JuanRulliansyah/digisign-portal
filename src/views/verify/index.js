@@ -3,9 +3,9 @@ import Navbar from 'components/Navbars/AuthNavbar';
 import React, { Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-const Login = React.lazy(() => import('containers/auth/Login'));
+const VerifyPages = React.lazy(() => import('containers/verify/Verify'));
 
-const Auth = ({ match }) => {
+const Verify = ({ match }) => {
     return (
         <>
         <Navbar transparent />
@@ -20,10 +20,9 @@ const Auth = ({ match }) => {
             ></div>
             <Suspense fallback={<div className="loading" />}>
                 <Switch>
-                    <Redirect exact from={`${match.url}/`} to={`${match.url}/login`} />
                     <Route
-                        path={`${match.url}/login`}
-                        render={(props) => <Login {...props} />}
+                        path={`${match.url}/verify`}
+                        render={(props) => <VerifyPages {...props} />}
                     />
                     <Redirect to="/not-found" />
                 </Switch>
@@ -31,8 +30,9 @@ const Auth = ({ match }) => {
             <FooterSmall absolute />
             </section>
         </main>
+        {/* // <AuthLayout></AuthLayout> */}
         </>
     );
 };
 
-export default Auth;
+export default Verify;

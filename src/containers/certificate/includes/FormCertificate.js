@@ -1,7 +1,7 @@
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { withRouter } from 'react-router-dom';
 
-const FormDocument = (props) => {
+const FormCertificate = (props) => {
 
     return ( 
         <>
@@ -12,13 +12,13 @@ const FormDocument = (props) => {
                             <Label 
                             className="block uppercase text-blueGray-600 text-xs font-bold mb-2" 
                             for="position_letter">
-                            Document (Document .PDF)
+                            Password
                             </Label>
-                            <Input name="document" 
-                            type="file"
+                            <Input name="password" 
+                            type="password"
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                             innerRef={props.register}/>
-                            {props.errors.document && <div className="invalid-feedback d-block">{props.errors.document.message}</div>}
+                            {props.errors.password && <div className="invalid-feedback d-block">{props.errors.password.message}</div>}
                         </FormGroup>
                     </div>
                 </div>
@@ -35,7 +35,7 @@ const FormDocument = (props) => {
                         <span className="bounce2" />
                         <span className="bounce3" />
                     </span>
-                    <span className="label">Save Document</span>
+                    <span className="label">Save Certificate</span>
                     </Button>
                 </div>
                 </div>
@@ -44,4 +44,4 @@ const FormDocument = (props) => {
      );
 }
  
-export default withRouter(FormDocument);
+export default withRouter(FormCertificate);

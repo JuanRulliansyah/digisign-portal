@@ -10,7 +10,6 @@ export default function Sidebar() {
 
   const localStorage = LocalStorageService.getService();
   const menuItems = localStorage.getModules();
-  console.log(menuItems);
 
   const state = {
       selectedParentMenu: '',

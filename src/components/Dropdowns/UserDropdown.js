@@ -1,7 +1,7 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
-import { logoutUser } from "modules/redux/actions";
 import { LocalStorageService } from "utils/storage";
+import { Button } from "reactstrap";
 
 
 const UserDropdown = () => {
@@ -66,7 +66,7 @@ const UserDropdown = () => {
           Action
         </a> */}
         <div className="h-0 my-2 border border-solid border-blueGray-100" />
-        <a
+        <Button
           href="#"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
@@ -74,7 +74,7 @@ const UserDropdown = () => {
           onClick={(e) => handleLogout()}
         >
           Logout
-        </a>
+        </Button>
       </div>
     </>
   );

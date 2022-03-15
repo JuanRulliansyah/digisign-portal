@@ -1,7 +1,6 @@
 import React, {Suspense} from 'react';
 import {Route, withRouter, Switch, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import AppLayout from 'layouts/AppLayout';
 import KycPages from './kyc';
 import Sidebar from 'components/Sidebar/Sidebar';
 import AdminNavbar from 'components/Navbars/AdminNavbar';
@@ -10,14 +9,13 @@ import HeaderStats from 'components/Headers/HeaderStats';
 import PositionLetterPages from './position_letter';
 import CertificatePages from './certificate';
 import DocumentPages from './document';
-// import AppLayout from 'layouts/AppLayout';
+import KycRequestPages from './kyc_request';
+import PositionLetterRequestPages from './position_letter_request';
 
 const Dashboard = React.lazy(() => import('containers/dashboards/index'));
 
 const AppAdmin = ({match}) => {
     return (
-        // <AppLayout></AppLayout>
-        // <AppLayout> 
         <>
         <Sidebar />
         <div className="relative md:ml-64 bg-blueGray-100">
@@ -41,8 +39,16 @@ const AppAdmin = ({match}) => {
                         render={(props) => <KycPages {...props} />}
                     />
                     <Route
+                        path={`${match.url}/kyc-request`}
+                        render={(props) => <KycRequestPages {...props} />}
+                    />
+                    <Route
                         path={`${match.url}/position-letter`}
                         render={(props) => <PositionLetterPages {...props} />}
+                    />
+                    <Route
+                        path={`${match.url}/position-letter-request`}
+                        render={(props) => <PositionLetterRequestPages {...props} />}
                     />
                     <Route
                         path={`${match.url}/certificate`}
@@ -59,12 +65,10 @@ const AppAdmin = ({match}) => {
             </div>
         </div>
         </>
-        // </AppLayout>
     );
 };
 
 const mapStateToProps = ({menu}) => {
-    // const {containerClassnames} = menu;
     const {containerClassnames} = '';
     return {containerClassnames};
 };

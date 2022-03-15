@@ -1,4 +1,4 @@
-import axios from "axios";
+import { customAxios as axios } from "utils/axios";
 import { appConfigs } from "configs";
 // import { LocalStorageService } from "utils/storage";
 
@@ -49,6 +49,23 @@ export const getListLetter = async () => {
     return result;
 }
 
+export const getListGeneralLeter = async () => {
+    let result = [];
+    const url = appConfigs.apiUrl + 'position-letter-general/';
+
+    await axios.get(url, {
+        'headers': {
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+
+        }}).then(response => {
+        result = response;
+    }).catch(error => {
+        result = error.response;
+    });
+
+    return result;
+}
+
 export const getDetailLetter = async (identity) => {
     let result = [];
     const url = appConfigs.apiUrl + `position-letter/${identity}/`;
@@ -82,5 +99,30 @@ export const deleteLetter = async (identity) => {
         result = error.response;
     });
 
+    return result;
+}
+
+export const approveLetter = async (data) => {
+    console.log(data);
+    let result = [];
+    // const localStorage = LocalStorageService.getService();
+    const letter = new FormData();
+    letter.append('status', letter.status);
+    letter.append('active', letter.active);
+    console.log(letter);
+    
+    const url = appConfigs.apiUrl + 'position-letter/'+ data.letter_id;
+
+    await axios.patch(url, data, {
+        'headers': {
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+
+        }
+    })
+    .then(function (response) {
+        result = response
+    }).catch(function (error) {
+        result = error.response
+    });
     return result;
 }

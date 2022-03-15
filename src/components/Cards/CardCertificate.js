@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Button, Col, FormGroup, Input, Label } from "reactstrap";
-import { useState } from "react";
+import { Button, FormGroup, Input, Label } from "reactstrap";
 import { setErrorValidation } from "utils/helpers/commons";
 import { withRouter } from 'react-router-dom';
 import { alertNotification } from "utils/helpers/alertNotifications";
@@ -10,21 +9,15 @@ import { postCertificate } from "services/certificate/manageCertificate";
 
 const CardCertificate = (props) => {
 
-    // const localStorage = LocalStorageService.getService();
-
-    const [ loading, setLoading ] = useState(false);
     const { register, errors, handleSubmit, setError } = useForm();
 
     const onSubmitCertificate = (data) => {
-        // dispatch(loginProcess());
         postCertificate(data).then(response => {
           console.log(data);
           console.log(response);
           if(response.status !== 201) {
-            //   dispatch(loginFailed(response?.data.message));
               setErrorValidation(response, setError);
           } else {
-            //   dispatch(loginSuccess(response.data));
             alertNotification(
                 'success',
                 'Certificate has been generated',

@@ -1,4 +1,4 @@
-import axios from "axios";
+import { customAxios as axios } from "utils/axios";
 import { appConfigs } from "configs";
 
 export const signDocument = async (data) => {

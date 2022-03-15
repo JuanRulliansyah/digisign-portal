@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { Button, Col, FormGroup, Input, Label } from "reactstrap";
-import { useState } from "react";
 import { setErrorValidation } from "utils/helpers/commons";
 import { withRouter } from 'react-router-dom';
 import { alertNotification } from "utils/helpers/alertNotifications";
@@ -9,10 +8,6 @@ import { postLetter } from "services/letter/manageLetter";
 
 
 const CardLetter = (props) => {
-
-    // const localStorage = LocalStorageService.getService();
-
-    const [ loading, setLoading ] = useState(false);
     const { register, errors, handleSubmit, setError } = useForm();
 
     const onSubmitLetter = (data) => {

@@ -1,40 +1,40 @@
-import CardLetter from "components/Cards/CardLetter";
 import { appConfigs } from "configs";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { postDocument } from "services/document/manageDocument";
-import { alertNotification } from "utils/helpers/alertNotifications";
-import { setErrorValidation } from "utils/helpers/commons";
+import toast, { Toaster } from 'react-hot-toast';
 import FormDocument from "./includes/FormDocument";
 
-// components
 
 const CreateDocument = (props) => {
-
     const [ loading, setLoading ] = useState(false);
     const { register, errors, handleSubmit, setValue, setError, clearErrors, control } = useForm();
 
+    let loadingStyle = {position: 'fixed', zIndex: 9999999999, height: '50px', float: 'center', left: 0, right: 0, margin: 'auto'}
+    let notifySuccess = () => toast.success('Document successfully created');
+    let notifyError = () => toast.error('Cannot proccess the Document, please try again later');
+
     const onSubmitDocument = (data) => {
-        // dispatch(loginProcess());
+        setLoading(true);
         postDocument(data).then(response => {
           if(response.status !== 201) {
-              setErrorValidation(response, setError);
+              notifyError();
+              setLoading(false);
           } else {
-            alertNotification(
-                'success',
-                'Document has been submitted, please wait for our review',
-                'Success',
-                3000
-            )
+            notifySuccess();
             setTimeout(() => {
-                props.history.push(`${appConfigs.rootUrl}/dashboard/`);
+                props.history.push(`${appConfigs.rootUrl}/document/`);
             }, 2000);
+            setLoading(false);
         }
         });
       };
 
     return ( 
         <>
+        {loading && 
+                <img style={loadingStyle} src={require("assets/img/loading.gif").default} alt="loading"></img>
+        }
         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
                 <div className="rounded-t bg-white mb-0 px-6 py-6">
                 <div className="text-center flex justify-between">
@@ -53,6 +53,7 @@ const CreateDocument = (props) => {
                     handleSubmit={handleSubmit(onSubmitDocument)}
                     action="create"
                 />
+                <Toaster />
             </div>
         </div>
         </>

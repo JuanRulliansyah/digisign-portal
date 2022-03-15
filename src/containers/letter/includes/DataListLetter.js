@@ -4,11 +4,9 @@ import { appConfigs } from "configs";
 import { deleteLetter } from "services/letter/manageLetter";
 import { alertNotification } from "utils/helpers/alertNotifications";
 
-const DataListLetter = (props, color) => {
+const DataListLetter = (props) => {
 
     const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-
-    const create_button_url = `${appConfigs.rootUrl}/create-letter/`;
 
     const createLetter = () =>{ 
         props.history.push(`${appConfigs.rootUrl}/position-letter/create-letter/`);
@@ -17,7 +15,7 @@ const DataListLetter = (props, color) => {
     const handleAction = (identity, action) => {
         if(action === "delete") {
             deleteLetter(identity).then(response => {
-                if(response.status == 204) {
+                if(response.status === 204) {
                     alertNotification(
                         'success',
                         'Position Letter has been deleted',
@@ -46,24 +44,6 @@ const DataListLetter = (props, color) => {
     const closeDropdownPopover = () => {
         setDropdownPopoverShow(false);
     };
-
-    // const deleteLetter = (props, letter) => {
-    //     confirmAlert({
-    //         customUI: ({ onClose }) => {
-    //             return (
-    //                 <ConfirmDelete
-    //                     subTitle={letter.title}
-    //                     message="Are you sure delete this award ?"
-    //                     onClose={onClose}
-    //                     onClick={() => {
-    //                         props.handleDelete(letter.id);
-    //                         onClose();
-    //                     }}
-    //                 />
-    //             );
-    //         }
-    //     });
-    // };
 
     return ( 
         <>

@@ -1,13 +1,6 @@
-import { Controller, useForm } from "react-hook-form";
 import { Button, Col, FormGroup, Input, Label } from "reactstrap";
-import { useState } from "react";
-import { setErrorValidation } from "utils/helpers/commons";
 import { withRouter } from 'react-router-dom';
-import { alertNotification } from "utils/helpers/alertNotifications";
-import { appConfigs } from "configs";
-import { postLetter } from "services/letter/manageLetter";
-import ReactDatePicker from "react-datepicker";
-import { dateFormat } from "utils/helpers/dateFormat";
+
 
 
 const FormLetter = (props) => {
@@ -31,6 +24,7 @@ const FormLetter = (props) => {
                             id="position">
                             <option>--- Choose Position ---</option>
                             <option value="1">Dosen</option>
+                            <option value="2">Mahasiswa</option>
                         </Input>
                         {props.errors.position && <div className="invalid-feedback d-block">{props.errors.position.message}</div>}
                         </Col>

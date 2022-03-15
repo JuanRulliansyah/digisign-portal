@@ -16,6 +16,8 @@ const ViewAuth = React.lazy(() => import('views/auth'));
 const ViewLoginSuccess = React.lazy(() => import('containers/auth/LoginSuccess'));
 const ViewErrorNotFound = React.lazy(() => import('containers/errors/ErrorNotFound'));
 const ViewErrorUnauthorized = React.lazy(() => import('containers/errors/ErrorUnauthorized'));
+const Verify = React.lazy(() => import('containers/verify/Verify'));
+
 
 function App() {
     return (
@@ -38,6 +40,11 @@ function App() {
                             path="/login-success"
                             exact
                             component={ViewLoginSuccess}
+                        />
+                        <Route
+                            path="/verify"
+                            exact
+                            render={(props) => <Verify {...props} />}
                         />
                         <Route
                             path="/not-found"

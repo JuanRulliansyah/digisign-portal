@@ -1,13 +1,5 @@
 import { LocalStorageService } from "utils/storage";
 import { FORGOT_PASSWORD_ACTION, LOGIN_FAILED, LOGIN_PROCESS, LOGIN_SUCCESS, LOGOUT_USER, RESET_PASSWORD_ACTION } from "./action";
-// import {
-//     LOGIN_PROCESS,
-//     LOGIN_SUCCESS,
-//     LOGIN_FAILED,
-//     FORGOT_PASSWORD_ACTION,
-//     RESET_PASSWORD_ACTION,
-//     LOGOUT_USER
-// } from "./action";
 
 const initialState = {
     loading: false,
@@ -16,7 +8,7 @@ const initialState = {
 
 const localStorage = LocalStorageService.getService();
 
-export default (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
     switch (action.type) {
         case LOGIN_PROCESS:
             return {
@@ -56,3 +48,5 @@ export default (state = initialState, action) => {
             return state;
     }
 }
+
+export default reducer;

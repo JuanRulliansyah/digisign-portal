@@ -1,4 +1,4 @@
-import axios from "axios";
+import { customAxios as axios } from "utils/axios";
 import { appConfigs } from "configs";
 // import { LocalStorageService } from "utils/storage";
 

@@ -1,10 +1,14 @@
 import axios from "axios";
+import { appConfigs } from "configs";
 
 export const postLogin = async (data) => {
     let result = []
-    await axios.post(`http://localhost:8000/api/auth/login/`, data, {
+    const url = appConfigs.apiUrl + 'auth/login/';
+
+    await axios.post(url, data, {
         headers: {
-            'Content-Type': 'application/json;'
+            'Content-Type': 'application/json;',
+            "X-Requested-With": "XMLHttpRequest"
         }
     }).then(function (response) {
         result = response

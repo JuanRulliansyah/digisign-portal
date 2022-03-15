@@ -6,7 +6,8 @@ export const appConfigs = {
     appName: 'Admin CPanel',
 
     // api url
-    apiUrl: 'http://localhost:8000/api/',
+    apiUrl: 'http://localhost:8000/api/',   
+    baseUrl: 'http://localhost:8000/',
     // Menu
     defaultMenuType: 'menu-default',
     subHiddenBreakpoint: 1440,
@@ -15,3 +16,6 @@ export const appConfigs = {
     // Theme Color
     themeColor: 'light.blueyale'
 }
+
+// apiUrl: 'http://localhost:8000/api/',
+//     baseUrl: 'http://localhost:8000/',

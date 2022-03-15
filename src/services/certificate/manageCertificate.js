@@ -1,19 +1,15 @@
-import axios from "axios";
 import { appConfigs } from "configs";
-// import { LocalStorageService } from "utils/storage";
+import { customAxios as axios } from "utils/axios";
 
 export const postCertificate = async (data) => {
     let result = [];
-    // const localStorage = LocalStorageService.getService();
     const letter = new FormData();
     letter.append('password', data.password);
-    
     const url = appConfigs.apiUrl + 'certificate/';
 
     await axios.post(url, letter, {
         'headers': {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-
         }
     })
     .then(function (response) {
@@ -27,8 +23,13 @@ export const postCertificate = async (data) => {
 }
 
 export const getListCertificate = async () => {
+    const result = await axios.get('certificate/');
+    return result;
+}
+
+export const deleteCertificate = async (identity) => {
     let result = [];
-    const url = appConfigs.apiUrl + 'certificate/';
+    const url = appConfigs.apiUrl + 'certificate/delete/'+identity;
 
     await axios.get(url, {
         'headers': {

@@ -1,6 +1,114 @@
+import { useEffect, useState } from 'react';
+import Select from 'react-select';
 import { Button, Col, FormGroup, Input, Label } from "reactstrap";
+import { getListProvince, getListCity, getListDistrict, getListSubdistrict } from 'services/kyc/manageKyc';
 
 const FormKyc = (props) => {
+    const [selectedProvince, setSelectedProvince] = useState("");
+    const [optionProvinces, setOptionProvince] = useState([]);
+
+    const [selectedCity, setSelectedCity] = useState("");
+    const [optionCities, setOptionCities] = useState([]);
+
+    const [selectedDistrict, setSelectedDistrict] = useState("");
+    const [optionDistricts, setOptionDistricts] = useState([]);
+
+    const [selectedSubdistrict, setSelectedSubdistrict] = useState("");
+    const [optionSubdistricts, setOptionSubdistricts] = useState([]);
+
+    const handleProvince = (e) => {
+        const province = e.target.value;
+        setSelectedProvince(province);
+    }   
+    
+    const handleChangeProvince = (e) => {
+        const province = e.value;
+        setSelectedProvince(province);
+    }
+
+    const handleCity = (e) => {
+        const city = e.target.value;
+        setSelectedCity(city);
+    }    
+
+    const handleChangeCity = (e) => {
+        const city = e.value;
+        setSelectedCity(city);
+    }
+    
+    const handleDistrict = (e) => {
+        const district = e.target.value;
+        setSelectedDistrict(district);
+    }    
+
+    const handleChangeDistrict = (e) => {
+        const district = e.value;
+        setSelectedDistrict(district);
+    }
+
+    const handleSubdistrict = (e) => {
+        const subdistrict = e.target.value;
+        setSelectedSubdistrict(subdistrict);
+    }    
+
+    const handleChangeSubDistrict = (e) => {
+        const subdistrict = e.value;
+        setSelectedSubdistrict(subdistrict);
+    }
+
+    useEffect(() => {
+        async function fetchProvince() {
+            await getListProvince(selectedProvince).then(response => {
+                if(response.status === 200) {
+                    setOptionProvince(response.data)
+                } else {
+                    console.log("Gagal");
+                }
+            });
+        }
+        fetchProvince();
+    }, [selectedProvince]);  
+
+
+    useEffect(() => {
+        async function fetchCity() {
+            await getListCity(selectedCity, selectedProvince).then(response => {
+                if(response.status === 200) {
+                    setOptionCities(response.data)
+                } else {
+                    console.log("Gagal");
+                }
+            });
+        }
+        fetchCity();
+    }, [selectedCity, selectedProvince]);
+
+    useEffect(() => {
+        async function fetchDistrict() {
+            await getListDistrict(selectedDistrict, selectedCity).then(response => {
+                if(response.status === 200) {
+                    setOptionDistricts(response.data)
+                } else {
+                    console.log("Gagal");
+                }
+            });
+        }
+        fetchDistrict();
+    }, [selectedDistrict, selectedCity]);
+
+    useEffect(() => {
+        async function fetchSubdistrict() {
+            await getListSubdistrict(selectedSubdistrict, selectedDistrict).then(response => {
+                if(response.status === 200) {
+                    setOptionSubdistricts(response.data)
+                } else {
+                    console.log("Gagal");
+                }
+            });
+        }
+        fetchSubdistrict();
+    }, [selectedSubdistrict, selectedDistrict]);
+
     return ( 
         <form onSubmit={props.handleSubmit} >
             <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
@@ -96,10 +204,13 @@ const FormKyc = (props) => {
                     for="province">
                     Province
                     </Label>
-                    <Input name="province" 
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    placeholder="e.g Jawa Barat"
-                    innerRef={props.register}/>
+                    <Select 
+                        innerRef={props.register}
+                        defaultValue={selectedProvince}
+                        onKeyDown={handleProvince}
+                        onChange={handleChangeProvince}
+                        options={optionProvinces}/>
+                    <Input type="hidden" name="province" innerRef={props.register} value={selectedProvince}></Input>
                     {props.errors.province && <div className="invalid-feedback d-block">{props.errors.province.message}</div>}
                 </FormGroup>
             </div>
@@ -111,10 +222,13 @@ const FormKyc = (props) => {
                     for="city">
                     City
                     </Label>
-                    <Input name="city" 
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    placeholder="e.g 16519"
-                    innerRef={props.register}/>
+                    <Select 
+                        innerRef={props.register}
+                        defaultValue={selectedCity}
+                        onKeyDown={handleCity}
+                        onChange={handleChangeCity}
+                        options={optionCities}/>
+                    <Input type="hidden" name="city" innerRef={props.register} value={selectedCity}></Input>
                     {props.errors.city && <div className="invalid-feedback d-block">{props.errors.city.message}</div>}
                 </FormGroup>
             </div>
@@ -126,10 +240,13 @@ const FormKyc = (props) => {
                     for="district">
                     District (Kecamatan)
                     </Label>
-                    <Input name="district" 
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    placeholder="e.g Sawangan"
-                    innerRef={props.register}/>
+                    <Select 
+                        innerRef={props.register}
+                        defaultValue={selectedDistrict}
+                        onKeyDown={handleDistrict}
+                        onChange={handleChangeDistrict}
+                        options={optionDistricts}/>
+                    <Input type="hidden" name="district" innerRef={props.register} value={selectedDistrict}></Input>
                     {props.errors.district && <div className="invalid-feedback d-block">{props.errors.district.message}</div>}
                 </FormGroup>
             </div>
@@ -141,10 +258,12 @@ const FormKyc = (props) => {
                     for="sub_district">
                     Sub District (Kelurahan)
                     </Label>
-                    <Input name="sub_district" 
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    placeholder="e.g Bedahan"
-                    innerRef={props.register}/>
+                    <Select 
+                        innerRef={props.register}
+                        onKeyDown={handleSubdistrict}
+                        onChange={handleChangeSubDistrict}
+                        options={optionSubdistricts}/>
+                    <Input type="hidden" name="sub_district" innerRef={props.register} value={selectedSubdistrict}></Input>
                     {props.errors.sub_district && <div className="invalid-feedback d-block">{props.errors.sub_district.message}</div>}
                 </FormGroup>
             </div>

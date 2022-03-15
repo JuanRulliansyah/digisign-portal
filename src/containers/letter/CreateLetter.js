@@ -1,35 +1,31 @@
-import CardLetter from "components/Cards/CardLetter";
 import { appConfigs } from "configs";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { postLetter } from "services/letter/manageLetter";
-import { alertNotification } from "utils/helpers/alertNotifications";
 import { setErrorValidation } from "utils/helpers/commons";
 import FormLetter from "./includes/FormLetter";
-
-// components
+import toast, { Toaster } from 'react-hot-toast';
 
 const CreateLetter = (props) => {
-
     const [ loading, setLoading ] = useState(false);
     const { register, errors, handleSubmit, setValue, setError, clearErrors, control } = useForm();
 
+    let loadingStyle = {position: 'fixed', zIndex: 9999999999, height: '50px', float: 'center', left: 0, right: 0, margin: 'auto'}
+
+    const notifySuccess = () => toast.success('Positon Letter successfully created');
+    const notifyError = () => toast.error('Cannot proccess the Position Letter, please try again later');
+
     const onSubmitLetter = (data) => {
-        // dispatch(loginProcess());
+        setLoading(true);
         postLetter(data).then(response => {
-          console.log(data);
-          console.log(response);
+          setLoading(false);
           if(response.status !== 201) {
+              notifyError();
               setErrorValidation(response, setError);
           } else {
-            alertNotification(
-                'success',
-                'KYC has been submitted, please wait for our review',
-                'Success',
-                3000
-            )
+            notifySuccess();
             setTimeout(() => {
-                props.history.push(`${appConfigs.rootUrl}/dashboard/`);
+                props.history.push(`${appConfigs.rootUrl}/position-letter/`);
             }, 2000);
         }
         });
@@ -37,6 +33,9 @@ const CreateLetter = (props) => {
 
     return ( 
         <>
+        {loading &&
+            <img style={loadingStyle} src={require("assets/img/loading.gif").default} alt="loading"></img>
+        }
         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
                 <div className="rounded-t bg-white mb-0 px-6 py-6">
                 <div className="text-center flex justify-between">
@@ -55,6 +54,7 @@ const CreateLetter = (props) => {
                     handleSubmit={handleSubmit(onSubmitLetter)}
                     action="create"
                 />
+                <Toaster />
             </div>
         </div>
         </>

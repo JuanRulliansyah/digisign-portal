@@ -5,16 +5,11 @@ import {Row, Spinner} from "reactstrap";
 import {appConfigs} from "configs";
 import { getUserModules } from "services/profile/userModule";
 import { logoutUser } from "modules/redux/actions";
-import { getIdentityFromHref } from "utils/helpers/commons";
 import { LocalStorageService } from "utils/storage";
-// import {Colxx} from "components/common";
-// import { LocalStorageService } from "utils";
-// import {getIdentityFromHref, LocalStorageService} from "utils";
 
 const LoginSuccess = (props) => {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
-    // const localStorage = LocalStorageService.getService();
 
     useEffect(() => {
         document.body.classList.add('background');
